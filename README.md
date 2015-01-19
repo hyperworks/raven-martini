@@ -1,6 +1,9 @@
 raven-go-middleware
 ===================
 
+[![GoDoc](https://godoc.org/github.com/hyperworks/raven-martini?status.svg)](https://godoc.org/github.com/hyperworks/raven-martini)  
+[![Build Status](https://travis-ci.org/hyperworks/raven-martini.svg)](https://travis-ci.org/hyperworks/raven-martini)
+
 Easy Middleware for GetSentry (Raven) for GO Web framework Martini
 
 ```
