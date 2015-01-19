@@ -1,13 +1,14 @@
 package ravenrecover
 
 import (
-		"log"
-		"fmt"
-		"net/http"
+	"fmt"
+	"log"
+	"net/http"
 
-		"github.com/go-martini/martini"
-		"github.com/getsentry/raven-go"
+	"github.com/getsentry/raven-go"
+	"github.com/go-martini/martini"
 )
+
 var client *raven.Client
 
 func trace() *raven.Stacktrace {
@@ -30,8 +31,9 @@ func RecoverRaven(dsn string, logger *log.Logger) martini.Handler {
 				if err, ok := e.(error); ok {
 					log.Printf("Sending this error to get sentry ")
 					packet := raven.NewPacket(err.Error(), raven.NewException(err, trace()), raven.NewHttp(req))
+					packet.Extra["langfight.SerializedError"] = fmt.Sprintf("%#v", err)
 					client.Capture(packet, nil)
-				} else if  strErr, ok := e.(string); ok {
+				} else if strErr, ok := e.(string); ok {
 					log.Printf("Sending this error to get sentry ")
 					packet := raven.NewPacket(strErr, raven.NewException(fmt.Errorf(strErr), trace()), raven.NewHttp(req))
 					client.Capture(packet, nil)
@@ -39,7 +41,6 @@ func RecoverRaven(dsn string, logger *log.Logger) martini.Handler {
 				panic(e)
 			}
 		}()
-
 
 		c.Next()
 		return
