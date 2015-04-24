@@ -2,9 +2,9 @@ package ravenrecover
 
 import (
 	"fmt"
-	"log"
 	"net/http"
 
+	log "github.com/Sirupsen/logrus"
 	"github.com/getsentry/raven-go"
 	"github.com/go-martini/martini"
 )
